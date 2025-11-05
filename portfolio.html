@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>박상현 - 포트폴리오</title>
+   <style>
+        /* Google Fonts 임포트 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        /* CSS 변수 정의 */
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --text-light: #9ca3af;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-accent: #eff6ff;
+            --border-color: #e5e7eb;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+        
+        /* 기본 스타일링 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.7;
+            color: var(--text-primary);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: var(--bg-primary);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* 헤더 섹션 */
+        .header-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            opacity: 0.3;
+        }
+        
+        .profile-img {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            margin: 0 auto 30px;
+            border: 5px solid rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .profile-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .section {
+            padding: 50px 40px;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+        }
+        
+        .section:last-child {
+            border-bottom: none;
+        }
+        
+        .section:nth-child(even) {
+            background-color: var(--bg-secondary);
+        }
+        
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+            padding-left: 20px;
+            border-left: 4px solid var(--accent-color);
+            position: relative;
+        }
+        
+        h3 {
+            color: var(--text-primary);
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .job-title {
+            font-size: 1.3rem;
+            font-weight: 300;
+            opacity: 0.9;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .intro-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+        
+        /* 스킬 그리드 */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .skill-item {
+            background: var(--bg-primary);
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+        }
+        
+        .skill-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--accent-color);
+        }
+        
+        .skill-item strong {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        /* 프로젝트 카드 */
+        .projects-grid {
+            display: grid;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .project {
+            background: var(--bg-primary);
+            padding: 35px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+        
+        .project:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .project-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        
+        .project-meta span {
+            background: var(--bg-accent);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+        
+        .project-features {
+            margin-top: 20px;
+        }
+        
+        .project-features ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .project-features li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 10px;
+            color: var(--text-secondary);
+        }
+        
+        .project-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+        
+        /* 연락처 섹션 */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .contact-item {
+            background: var(--bg-accent);
+            padding: 25px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+        
+        .contact-item:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+        
+        .contact-item a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .contact-item a:hover {
+            color: var(--secondary-color);
+        }
+        
+        /* 반응형 디자인 */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .header-section {
+                padding: 40px 20px;
+            }
+            
+            .section {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            h2 {
+                font-size: 1.6rem;
+            }
+            
+            .profile-img {
+                width: 120px;
+                height: 120px;
+                margin-bottom: 20px;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .project-meta {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            h2 {
+                font-size: 1.4rem;
+                padding-left: 15px;
+            }
+            
+            .job-title {
+                font-size: 1.1rem;
+            }
+            
+            .profile-img {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .project {
+                padding: 25px;
+            }
+            
+            .skill-item {
+                padding: 20px;
+            }
+        }
+        
+        /* 스크롤 애니메이션 */
+        @media (prefers-reduced-motion: no-preference) {
+            .section {
+                opacity: 0;
+                transform: translateY(20px);
+                animation: slideInView 0.6s ease-out forwards;
+            }
+            
+            .section:nth-child(1) { animation-delay: 0.1s; }
+            .section:nth-child(2) { animation-delay: 0.2s; }
+            .section:nth-child(3) { animation-delay: 0.3s; }
+            .section:nth-child(4) { animation-delay: 0.4s; }
+            .section:nth-child(5) { animation-delay: 0.5s; }
+        }
+        
+        @keyframes slideInView {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!— 프로필 섹션 —>
+        <section class="header-section">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZLxe20VJqQwm-x0JmsCQiNdc36BIatMZC3w&s" alt="프로필 사진" class="profile-img">
+            <h1>박상현</h1>
+            <p class="job-title">프론트엔드 개발자</p>
+        </section>
+
+        <!— 소개 섹션 —>
+        <section class="section">
+            <h2>💁‍♀️ 자기소개</h2>
+            <p class="intro-text">
+                안녕하세요! 웹 개발에 열정을 가진 김개발입니다. 
+                사용자 친화적인 웹사이트를 만들기 위해 항상 노력하고 있으며, 
+                새로운 기술을 배우는 것을 즐깁니다.
+            </p>
+            <p class="intro-text">
+                HTML, CSS, JavaScript를 활용한 프론트엔드 개발에 관심이 많으며, 
+                깔끔하고 직관적인 디자인을 추구합니다.
+            </p>
+        </section>
+
+        <!— 기술 스택 섹션 —>
+        <section class="section">
+            <h2>🛠️ 기술 스택</h2>
+            <div class="skills-grid">
+                <div class="skill-item">
+                    <strong>HTML:</strong> 웹 페이지 구조 설계 및 시맨틱 마크업
+                </div>
+                <div class="skill-item">
+                    <strong>CSS:</strong> 스타일링 및 반응형 디자인 구현
+                </div>
+                <div class="skill-item">
+                    <strong>JavaScript:</strong> 동적 웹 페이지 및 인터랙션 구현
+                </div>
+                <div class="skill-item">
+                    <strong>GitHub:</strong> 버전 관리 및 협업 도구 활용
+                </div>
+            </div>
+        </section>
+
+        <!— 프로젝트 섹션 —>
+        <section class="section">
+            <h2>📂 프로젝트</h2>
+            <div class="projects-grid">
+                <div class="project">
+                    <h3>🌐 개인 포트폴리오 웹사이트</h3>
+                    <div class="project-meta">
+                        <span>📅 2024.10 - 2024.11</span>
+                        <span>💻 HTML, CSS, JavaScript</span>
+                    </div>
+                    <p>
+                        개인 포트폴리오를 소개하는 반응형 웹사이트입니다. 
+                        깔끔한 디자인과 직관적인 네비게이션을 구현했습니다.
+                    </p>
+                    <div class="project-features">
+                        <p><strong>주요 기능:</strong></p>
+                        <ul>
+                            <li>반응형 디자인으로 모바일 최적화</li>
+                            <li>부드러운 스크롤 애니메이션</li>
+                            <li>프로젝트 갤러리 구현</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="project">
+                    <h3>🍕 맛집 추천 페이지</h3>
+                    <div class="project-meta">
+                        <span>📅 2024.09 - 2024.10</span>
+                        <span>💻 HTML, CSS</span>
+                    </div>
+                    <p>
+                        지역별 맛집을 소개하는 정적 웹페이지입니다. 
+                        사용자가 쉽게 정보를 찾을 수 있도록 카테고리별로 분류했습니다.
+                    </p>
+                    <div class="project-features">
+                        <p><strong>주요 기능:</strong></p>
+                        <ul>
+                            <li>카테고리별 맛집 분류</li>
+                            <li>이미지 갤러리 구현</li>
+                            <li>리뷰 시스템 디자인</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="project">
+                    <h3>📝 투두 리스트 앱</h3>
+                    <div class="project-meta">
+                        <span>📅 2024.08 - 2024.09</span>
+                        <span>💻 HTML, CSS, JavaScript</span>
+                    </div>
+                    <p>
+                        일정 관리를 위한 간단한 투두 리스트 웹 애플리케이션입니다. 
+                        할 일 추가, 완료, 삭제 기능을 구현했습니다.
+                    </p>
+                    <div class="project-features">
+                        <p><strong>주요 기능:</strong></p>
+                        <ul>
+                            <li>할 일 추가/수정/삭제</li>
+                            <li>완료 상태 체크</li>
+                            <li>로컬 스토리지 활용한 데이터 저장</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 연락처 섹션 -->
+        <section class="section">
+            <h2>📞 연락처</h2>
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <p><strong>📧 이메일</strong></p>
+                    <p>kimdev@example.com</p>
+                </div>
+                <div class="contact-item">
+                    <p><strong>📱 전화번호</strong></p>
+                    <p>010-1234-5678</p>
+                </div>
+                <div class="contact-item">
+                    <p><strong>🐙 GitHub</strong></p>
+                    <p><a href="https://github.com/kimdev" target="_blank">github.com/kimdev</a></p>
+                </div>
+                <div class="contact-item">
+                    <p><strong>📝 블로그</strong></p>
+                    <p><a href="https://kimdev.blog" target="_blank">kimdev.blog</a></p>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
