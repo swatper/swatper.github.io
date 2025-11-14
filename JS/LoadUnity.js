@@ -2,8 +2,25 @@ document.addEventListener('DOMContentLoaded', function() {
     //1. 게임 파일 경로 설정
     const gameIframeSrc = './Unity/index.html';
     const placeholder = document.getElementById('gamePlace');
+    
+    //유니티 원본 해상도 정의
+    const ORIGINAL_WIDTH = 1920;
+    const ORIGINAL_HEIGHT = 1080;
 
-    //2. 파일 존재 여부를 확인하는 비동기 함수 (HTTP 요청 사용)
+    function adjustIframeScale(iframeElement) {
+        if (!iframeElement) return;
+
+        const containerWidth = placeholder.clientWidth;
+        const containerHeight = placeholder.clientHeight;
+        
+        const scaleX = containerWidth / ORIGINAL_WIDTH;
+        const scaleY = containerHeight / ORIGINAL_HEIGHT;
+        const scale = Math.min(scaleX, scaleY);
+        
+        iframeElement.style.transform = `scale(${scale})`;
+    }
+
+    //2. 파일 존재 여부를 확인하는 비동기 함수 (기존과 동일)
     function checkFileExists(url, callback) {
         const xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
@@ -20,13 +37,24 @@ document.addEventListener('DOMContentLoaded', function() {
         if (exists) {
             //파일이 존재하면 iFrame 생성 후 보여주기
             const iframe = document.createElement('iframe');
+            iframe.id = 'unity-game-iframe';
             iframe.src = gameIframeSrc;
-            iframe.width = "1920";   
-            iframe.height = "1080";
+            
+            //iframe 크기는 원본 해상도로 설정 (CSS transform을 위한 기반 크기)
+            iframe.width = ORIGINAL_WIDTH; 
+            iframe.height = ORIGINAL_HEIGHT;
+            
             iframe.setAttribute('allowfullscreen', '');
             iframe.style.border = "none";
-
+            
             placeholder.appendChild(iframe);
+            
+            //iframe 로드 완료 후 스케일 조정 함수 실행
+            iframe.onload = function() {
+                adjustIframeScale(iframe);
+            }; 
+            
+            window.addEventListener('resize', () => adjustIframeScale(iframe));
         } else {
             //파일이 없으면 '준비 중' 메시지 표시
             const message = document.createElement('h1');
