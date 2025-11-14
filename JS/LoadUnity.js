@@ -21,9 +21,10 @@ document.addEventListener('DOMContentLoaded', function() {
             //파일이 존재하면 iFrame 생성 후 보여주기
             const iframe = document.createElement('iframe');
             iframe.src = gameIframeSrc;
-            iframe.width = "960";   //수정 예정
-            iframe.height = "600";  //수정 예정
+            iframe.width = "1920";   
+            iframe.height = "1080";
             iframe.setAttribute('allowfullscreen', '');
+            iframe.style.border = "none";
 
             placeholder.appendChild(iframe);
         } else {

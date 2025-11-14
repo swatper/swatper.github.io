@@ -5,3 +5,18 @@
   padding: 50px;  
   text-align: center;
 }
+
+#gamePlace {
+    display: flex;
+    justify-content: center;
+    align-items: center;     
+    width: 100%;
+}
+
+#gamePlace iframe {
+    width: 1920px;
+    height: 1080px;
+    transform-origin: top left;
+    max-width: 100vw;
+    max-height: 100vh;
+}
