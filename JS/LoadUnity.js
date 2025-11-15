@@ -41,8 +41,8 @@ document.addEventListener('DOMContentLoaded', function() {
             iframe.src = gameIframeSrc;
             
             //iframe 크기는 원본 해상도로 설정 (CSS transform을 위한 기반 크기)
-            iframe.width = ORIGINAL_WIDTH; 
-            iframe.height = ORIGINAL_HEIGHT;
+            iframe.style.width = "100%";
+            iframe.style.height = "100%";
             
             iframe.setAttribute('allowfullscreen', '');
             iframe.style.border = "none";
