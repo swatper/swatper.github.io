@@ -16,8 +16,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const scaleX = containerWidth / ORIGINAL_WIDTH;
         const scaleY = containerHeight / ORIGINAL_HEIGHT;
         const scale = Math.min(scaleX, scaleY);
-        
-        iframeElement.style.transform = `scale(${scale})`;
     }
 
     //2. 파일 존재 여부를 확인하는 비동기 함수 (기존과 동일)
