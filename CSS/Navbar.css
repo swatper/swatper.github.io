@@ -6,7 +6,7 @@
     /* 세로 중앙 정렬 */
     background-color: #333;
     /* 배경색: 어두운 회색 */
-    padding: 10px 20px;
+    padding: 5px;
     /* 여백 설정 */
     position: fixed;
     /* 화면 상단에 고정 */
@@ -20,92 +20,8 @@
     /* 텍스트 색상: 흰색 */
 }
 
-/* 로고 스타일 */
-.navbar {
-    font-size: 20px;
-    /* 글자 크기 */
-    font-weight: bold;
-    /* 굵은 글씨 */
-}
-
 .logo {
     width: auto;
     height: 50px;
     margin-left: 20px;
-}
-
-/* 메뉴 스타일 */
-.navbar .menu {
-    display: flex;
-    /* 가로로 나열 */
-    list-style: none;
-    /* 기본 리스트 스타일 제거 */
-    margin: 0;
-    /* 외부 여백 제거 */
-    padding: 0;
-    /* 내부 여백 제거 */
-    margin-left: auto;
-    /* 메뉴를 오른쪽으로 밀기 */
-    margin-right: 50px;
-}
-
-.navbar .menu li {
-    margin: 0 10px;
-    /* 메뉴 항목 간격 조정 */
-}
-
-.navbar .menu li a {
-    text-decoration: none;
-    /* 밑줄 제거 */
-    color: white;
-    /* 텍스트 색상: 흰색 */
-    transition: color 0.3s;
-    /* 색상 전환 효과 */
-}
-
-.navbar .menu li a:hover {
-    color: #f0a500;
-    /* 호버 시 색상: 밝은 주황색 */
-}
-
-/* 섹션 스타일 */
-section {
-    height: 100vh;
-    /* 화면 전체 높이 */
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-.pass {
-    width: 100px;
-    background-color: #333;
-    /* Navbar 배경색과 동일 */
-    color: white;
-    /* 텍스트 색상 */
-    border: 1px solid #333;
-    /* 약간 밝은 경계선 */
-    padding: 8px 12px;
-    /* 내부 여백 */
-    border-radius: 4px;
-    /* 둥근 모서리 */
-    font-size: 16px;
-    /* 글자 크기 */
-    outline: none;
-    /* 클릭 시 외곽선 제거 */
-    margin-left: 20px;
-    /* 로고와 간격 */
-    transition: all 0.3s ease;
-    /* 부드러운 전환 효과 */
-}
-
-.pass::placeholder {
-    color: #bbb;
-    /* Placeholder 텍스트 색상 */
-}
-
-.pass:focus {
-    border-color: #f0a500;
-    /* 포커스 시 주황색 경계선 */
-    box-shadow: 0 0 5px rgba(240, 165, 0, 0.5);
-    /* 포커스 시 강조 */
 }
