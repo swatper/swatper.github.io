@@ -49,6 +49,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const scaleX = containerWidth / ORIGINAL_WIDTH;
         const scaleY = containerHeight / ORIGINAL_HEIGHT;
         const scale = Math.min(scaleX, scaleY);
+        
+        // iframe을 원본 해상도로 설정 후 scale 적용
+        iframeElement.style.width = ORIGINAL_WIDTH + 'px';
+        iframeElement.style.height = ORIGINAL_HEIGHT + 'px';
+        iframeElement.style.transform = 'scale(' + scale + ')';
+        iframeElement.style.transformOrigin = 'top center';
     }
 
     //2. 파일 존재 여부를 확인하는 비동기 함수
@@ -72,11 +78,13 @@ document.addEventListener('DOMContentLoaded', function() {
             iframe.src = gameIframeSrc;
             
             //iframe 크기는 원본 해상도로 설정 (CSS transform을 위한 기반 크기)
-            iframe.style.width = "100%";
-            iframe.style.height = "100%";
+            iframe.style.width = ORIGINAL_WIDTH + 'px';
+            iframe.style.height = ORIGINAL_HEIGHT + 'px';
             
             iframe.setAttribute('allowfullscreen', '');
+            iframe.setAttribute('scrolling', 'no');
             iframe.style.border = "none";
+            iframe.style.display = 'block';
             
             placeholder.appendChild(iframe);
             
