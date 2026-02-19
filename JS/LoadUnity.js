@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
         iframeElement.style.width = ORIGINAL_WIDTH + 'px';
         iframeElement.style.height = ORIGINAL_HEIGHT + 'px';
         iframeElement.style.transform = 'scale(' + scale + ')';
-        iframeElement.style.transformOrigin = 'top center';
+        iframeElement.style.transformOrigin = 'center';
     }
 
     //2. 파일 존재 여부를 확인하는 비동기 함수
