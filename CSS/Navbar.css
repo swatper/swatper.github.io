@@ -1,27 +1,31 @@
 /* 네비게이션 바 스타일 */
 .navbar {
     display: flex;
-    /* 가로로 나열 */
     align-items: center;
-    /* 세로 중앙 정렬 */
-    background-color: #333;
-    /* 배경색: 어두운 회색 */
-    padding: 5px;
-    /* 여백 설정 */
+    background-color: #0f1419;
+    padding: 10px;
     position: fixed;
-    /* 화면 상단에 고정 */
-    top: 0;
-    /* 상단 위치 고정 */
     width: 100%;
-    /* 화면 너비 전체 사용 */
-    z-index: 1000;
-    /* 다른 요소 위로 올리기 */
-    color: white;
-    /* 텍스트 색상: 흰색 */
+    height: 70px;
+    z-index: 10;
 }
 
 .logo {
     width: auto;
-    height: 50px;
-    margin-left: 20px;
+    height: 60px;
+    margin-left: 10%;
+}
+
+.navbar .menu {
+    display: flex;
+    list-style: none;
+    margin-left: auto;
+    margin-right: 10%;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-size: clamp(0.8rem, 2vw, 1.5rem);
+    margin-left: 30px;
 }

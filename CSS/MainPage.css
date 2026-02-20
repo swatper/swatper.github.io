@@ -1,0 +1,14 @@
+@font-face {
+    font-family: 'MyFont';
+    src: url('../Fonts/pixelroborobo.otf') format('opentype');
+}
+
+html {
+    scroll-padding-top: 70px;
+}
+
+.Intro {
+    margin-top: 100px;
+    color: #FFEB99;
+    text-align: center;
+}
