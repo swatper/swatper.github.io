@@ -82,6 +82,10 @@ document.addEventListener('DOMContentLoaded', function() {
             iframe.style.height = ORIGINAL_HEIGHT + 'px';
             
             iframe.setAttribute('allowfullscreen', '');
+            // allow fullscreen and autoplay inside the iframe for modern browsers
+            iframe.setAttribute('allow', 'fullscreen; autoplay; clipboard-write');
+            // some browsers/platforms expect the camelCase property
+            iframe.allowFullscreen = true;
             iframe.setAttribute('scrolling', 'no');
             iframe.style.border = "none";
             iframe.style.display = 'block';
