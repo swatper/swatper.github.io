@@ -38,4 +38,17 @@ function setProjectBadge() {
     }
 }
 
+function setBackgroundActive(isActive) {
+    const background = document.querySelector(".Background");
+    if (!background) return;
+
+if (isActive) {
+        //게임에서 마우스가 나갔을 때: 애니메이션 재개
+        background.classList.remove("stop-animation");
+    } else {
+        //게임에 마우스가 들어왔을 때: 애니메이션 정지 (CPU/GPU 자원 확보)
+        background.classList.add("stop-animation");
+    }
+}
+
 window.onload = init;

@@ -80,10 +80,17 @@ document.addEventListener('DOMContentLoaded', function() {
             //iframe 크기는 원본 해상도로 설정 (CSS transform을 위한 기반 크기)
             iframe.style.width = ORIGINAL_WIDTH + 'px';
             iframe.style.height = ORIGINAL_HEIGHT + 'px';
+            iframe.style.border = "none";
+            iframe.style.display = 'block';
+
+            //GPU 레이어 강제 할당 및 렌더링 최적화 힌트
+            iframe.style.willChange = 'transform'; 
+            iframe.style.backfaceVisibility = 'hidden';
+            iframe.style.transformStyle = 'preserve-3d';
             
             iframe.setAttribute('allowfullscreen', '');
             // allow fullscreen and autoplay inside the iframe for modern browsers
-            iframe.setAttribute('allow', 'fullscreen; autoplay; clipboard-write');
+            iframe.setAttribute('allow', 'fullscreen; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
             // some browsers/platforms expect the camelCase property
             iframe.allowFullscreen = true;
             iframe.setAttribute('scrolling', 'no');
@@ -91,6 +98,19 @@ document.addEventListener('DOMContentLoaded', function() {
             iframe.style.display = 'block';
             
             placeholder.appendChild(iframe);
+
+            //[추가]배경 제어 이벤트 리스너
+            iframe.addEventListener('mouseenter', function() {
+                if (typeof window.setBackgroundActive === 'function') {
+                    window.setBackgroundActive(false);
+                }
+            });
+
+            iframe.addEventListener('mouseleave', function() {
+                if (typeof window.setBackgroundActive === 'function') {
+                    window.setBackgroundActive(true);
+                }
+            });
             
             //iframe 로드 완료 후 스케일 조정 함수 실행
             iframe.onload = function() {

@@ -186,3 +186,8 @@
     }
   }
   
+.stop-animation .estrela, 
+.stop-animation .meteoro, 
+.stop-animation .lua {
+    animation-play-state: paused !important;
+}
