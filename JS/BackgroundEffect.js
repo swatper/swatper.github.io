@@ -38,6 +38,7 @@ function setProjectBadge() {
     }
 }
 
+//배경 애니메이션 제어 함수
 function setBackgroundActive(isActive) {
     const background = document.querySelector(".Background");
     if (!background) return;
