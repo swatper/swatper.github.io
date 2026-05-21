@@ -25,6 +25,7 @@ jobs:
       - name: 필수 패키지 설치
         run: |
           pip install playwright
+          pip install playwright requests
 
       - name: 가상 브라우저(Chromium) 설치
         run: |
@@ -36,7 +37,7 @@ jobs:
 
       - name: 크롤러 실행 및 쿠폰 추출
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
           GIST_ID: ${{ secrets.GIST_ID }}          
         run: |
           python Couponscraper.py
