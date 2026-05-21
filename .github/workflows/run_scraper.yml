@@ -1,0 +1,42 @@
+name: Unity Coupon Auto Scraper
+
+on:
+  schedule:
+    # 매주 금요일 오후 5시(KST)에 자동으로 실행되도록 설정
+    # 한국 시간(KST)은 UTC보다 9시간 빠르므로, 17시 - 9시간 = 08시(UTC)로 계산
+    - cron: '0 8 * * 5'
+  
+  # 깃허브 웹사이트 Actions 탭에서 내가 원할 때 수동으로 즉시 실행할 수 있게 하는 버튼 생성
+  workflow_dispatch: 
+
+jobs:
+  run-scraper-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 저장소 코드 체크아웃
+        uses: actions/checkout@v4
+
+      - name: 파이썬(Python) 환경 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: 필수 패키지 설치
+        run: |
+          pip install playwright
+
+      - name: 가상 브라우저(Chromium) 설치
+        run: |
+          playwright install chromium
+
+      - name: 브라우저 실행 의존성 파일 설치
+        run: |
+          playwright install-deps
+
+      - name: 크롤러 실행 및 쿠폰 추출
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GIST_ID: ${{ secrets.GIST_ID }}          
+        run: |
+          python Couponscraper.py
