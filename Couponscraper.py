@@ -5,8 +5,12 @@ import json
 import requests
 from playwright.sync_api import sync_playwright
 
-# GIST에 쿠폰 번호와 에셋 URL, 날짜 저장
-def update_gist(coupon_code, asset_url):
+if os.name != 'nt': # 윈도우 환경이 아닐 때만 실행 (리눅스용)
+    os.environ['TZ'] = 'Asia/Seoul'
+    time.tzset()
+
+#GIST에 추출한 5가지 데이터 Json 형태로 저장
+def update_gist(publisher_name, asset_name, coupon_code, asset_url):
     gist_id = os.environ.get("GIST_ID") 
     github_token = os.environ.get("GH_TOKEN")
     
@@ -14,15 +18,16 @@ def update_gist(coupon_code, asset_url):
         print("❌ [에러] GIST_ID 또는 GH_TOKEN 환경변수가 설정되지 않았습니다.")
         return
 
-    # 유니티 클라이언트가 읽을 JSON 구조 정의
     payload = {
-        "description": "Unity Asset Store Free Asset Coupon Info",
+        "description": "Unity Asset Store Free Asset Coupon Info (Enhanced)",
         "files": {
             "unity_free_asset.json": {
                 "content": json.dumps({
-                    "coupon_code": coupon_code,
-                    "asset_url": asset_url,
-                    "last_updated": time.strftime("%Y-%m-%d %H:%M:%S")
+                    "publisher_name": publisher_name, #퍼블리셔(제작사) 이름
+                    "asset_name": asset_name,         #에셋 고유 명칭
+                    "coupon_code": coupon_code,       #쿠폰 코드
+                    "asset_url": asset_url,           #에셋 상세 주소
+                    "last_updated": time.strftime("%Y-%m-%d %H:%M:%S") #동기화 타임스탬프
                 }, ensure_ascii=False, indent=2)
             }
         }
@@ -45,6 +50,8 @@ def update_gist(coupon_code, asset_url):
 
 def extract_and_save_coupon():
     base_url = "https://assetstore.unity.com"
+    publisher_name = "UNKNOWN"
+    asset_name = "UNKNOWN"
     coupon_code = "UNKNOWN"
     asset_url = "UNKNOWN"
     
@@ -61,19 +68,37 @@ def extract_and_save_coupon():
         time.sleep(5)
         
         try:
+            # 1. 퍼블리셔 이름 추출 (예: Gustav Olsson AB)
+            publisher_selector = "span.caption.mb-5"
+            if page.locator(publisher_selector).count() > 0:
+                raw_publisher = page.locator(publisher_selector).inner_text()
+                # 뒤에 붙는 불필요한 문구 정제 (asset giveaway 등 제거)
+                publisher_name = raw_publisher.replace("asset giveaway", "").strip()
+                print(f"🏢 퍼블리셔 추출 성공: {publisher_name}")
+            else:
+                print("⚠️ 퍼블리셔 셀렉터를 찾지 못했습니다.")
+
+            # 2. 에셋 이름 추출 (예: Ocean Toolkit)
+            asset_name_selector = "h2.header-mid"
+            if page.locator(asset_name_selector).count() > 0:
+                asset_name = page.locator(asset_name_selector).inner_text().strip()
+                print(f"📦 에셋 이름 추출 성공: {asset_name}")
+            else:
+                print("⚠️ 에셋 이름 셀렉터를 찾지 못했습니다.")
+
+            # 3. 쿠폰 코드 추출
             coupon_selector = "span.body.mt-5" 
             page.wait_for_selector(coupon_selector, timeout=5000)
-            
             full_text = page.locator(coupon_selector).inner_text()
-            print(f"📝 긁어온 원본 문장: {full_text}")
             
             match = re.search(r"the coupon code ([A-Z0-9]+)", full_text)
             if match:
                 coupon_code = match.group(1)
                 print(f"🎉 쿠폰 코드 추출 성공: {coupon_code}")
             else:
-                print("⚠️ 문장은 가져왔으나 쿠폰 패턴을 찾지 못했습니다.")
+                print("⚠️ 쿠폰 패턴을 찾지 못했습니다.")
 
+            # 4. 에셋 상세 주소(URL) 추출
             link_selector = 'a[aria-label="Get your free gift"]'
             if page.locator(link_selector).count() > 0:
                 relative_path = page.locator(link_selector).get_attribute("href")
@@ -81,16 +106,18 @@ def extract_and_save_coupon():
                     asset_url = base_url + relative_path if relative_path.startswith("/") else relative_path
                     print(f"🔗 에셋 상세 주소 추출 성공: {asset_url}")
             else:
-                print("⚠️ 무료 선물 받기 버튼(링크)을 찾지 못했습니다.")
+                print("⚠️ 무료 선물 받기 링크를 찾지 못했습니다.")
 
             print("\n==================================================")
-            print("📊 최종 추출 데이터 확인")
+            print("📊 최종 추출 데이터 확인 (5종 세트)")
+            print(f"  - 퍼블리셔: {publisher_name}")
+            print(f"  - 에셋 이름: {asset_name}")
             print(f"  - 쿠폰 코드: {coupon_code}")
             print(f"  - 에셋 링크: {asset_url}")
             print("==================================================\n")
             
-            # 크롤링 성공 시 Gist 업데이트 호출
-            update_gist(coupon_code, asset_url)
+            # 모든 데이터를 Gist에 전송
+            update_gist(publisher_name, asset_name, coupon_code, asset_url)
                 
         except Exception as e:
             print(f"❌ [실패] 에러 발생: {e}")
