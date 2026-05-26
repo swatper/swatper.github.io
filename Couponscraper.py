@@ -27,7 +27,7 @@ def update_gist(publisher_name, asset_name, coupon_code, asset_url):
                     "asset_name": asset_name,         #에셋 고유 명칭
                     "coupon_code": coupon_code,       #쿠폰 코드
                     "asset_url": asset_url,           #에셋 상세 주소
-                    "last_updated": time.strftime("%Y-%m-%d %H:%M:%S") #동기화 타임스탬프
+                    "last_updated": time.strftime("%Y-%m-%d %H:%M:%S") #동기화 타임스탬프 (한국 시간 기준)
                 }, ensure_ascii=False, indent=2)
             }
         }
@@ -74,7 +74,7 @@ def extract_and_save_coupon():
                 raw_publisher = page.locator(publisher_selector).inner_text()
                 # 뒤에 붙는 불필요한 문구 정제 (asset giveaway 등 제거)
                 publisher_name = raw_publisher.replace("asset giveaway", "").strip()
-                print(f"🏢 퍼블리셔 추출 성공: {publisher_name}")
+                # print(f"🏢 퍼블리셔 추출 성공: {publisher_name}")
             else:
                 print("⚠️ 퍼블리셔 셀렉터를 찾지 못했습니다.")
 
@@ -82,7 +82,7 @@ def extract_and_save_coupon():
             asset_name_selector = "h2.header-mid"
             if page.locator(asset_name_selector).count() > 0:
                 asset_name = page.locator(asset_name_selector).inner_text().strip()
-                print(f"📦 에셋 이름 추출 성공: {asset_name}")
+                # print(f"📦 에셋 이름 추출 성공: {asset_name}")
             else:
                 print("⚠️ 에셋 이름 셀렉터를 찾지 못했습니다.")
 
@@ -94,7 +94,7 @@ def extract_and_save_coupon():
             match = re.search(r"the coupon code ([A-Z0-9]+)", full_text)
             if match:
                 coupon_code = match.group(1)
-                print(f"🎉 쿠폰 코드 추출 성공: {coupon_code}")
+                # print(f"🎉 쿠폰 코드 추출 성공: {coupon_code}")
             else:
                 print("⚠️ 쿠폰 패턴을 찾지 못했습니다.")
 
@@ -109,7 +109,7 @@ def extract_and_save_coupon():
                 print("⚠️ 무료 선물 받기 링크를 찾지 못했습니다.")
 
             print("\n==================================================")
-            print("📊 최종 추출 데이터 확인 (5종 세트)")
+            print("📊 최종 추출 데이터 확인 (4종 세트)")
             print(f"  - 퍼블리셔: {publisher_name}")
             print(f"  - 에셋 이름: {asset_name}")
             print(f"  - 쿠폰 코드: {coupon_code}")
