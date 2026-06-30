@@ -12,3 +12,20 @@ html {
     color: #FFEB99;
     text-align: center;
 }
+
+.Intro-sub {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #e0e0e0;
+    background: rgba(0, 0, 0, 0.4); /* 글자 뒤에 어두운 반투명 배경을 깔아 가독성 확보 */
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 강조 텍스트 색상 */
+.Intro-sub strong {
+    color: #ffd700; /* 금색/노란색 계열로 포트폴리오 단어 강조 */
+    font-weight: bold;
+}
