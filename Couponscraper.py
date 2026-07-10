@@ -88,7 +88,7 @@ def extract_and_save_coupon():
                     print("⚠️ 퍼블리셔 셀렉터를 찾지 못했습니다.")
 
                 # 2. 에셋 이름 추출 (예: Ocean Toolkit)
-                asset_name_selector = "h2.header-mid"
+                asset_name_selector = "h2.header-large"
                 if page.locator(asset_name_selector).count() > 0:
                     asset_name = page.locator(asset_name_selector).inner_text().strip()
                 else:
