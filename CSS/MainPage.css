@@ -24,6 +24,11 @@ html {
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.Intro-sub a {
+    color: #ffd700; /* 금색/노란색 계열로 포트폴리오 단어 강조 */
+    font-weight: bold;
+}
+
 /* 강조 텍스트 색상 */
 .Intro-sub strong {
     color: #ffd700; /* 금색/노란색 계열로 포트폴리오 단어 강조 */

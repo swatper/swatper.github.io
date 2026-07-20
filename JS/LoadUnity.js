@@ -7,29 +7,50 @@ document.addEventListener('DOMContentLoaded', function() {
         return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
     
-    //2. 메시지 표시 함수
+    // 2. 모바일 안내 메시지 표시 함수
     function displayMobileMessage() {
-        const message = document.createElement('div'); // div로 변경
+        const message = document.createElement('div');
         message.className = 'mobile-warning-message';
-        message.style.color = '#FFEB99';
-        message.innerHTML = `
-            <h2>화면 최적화 안내</h2>
-            <p>본 포트폴리오는 PC 환경(데스크톱/노트북)에 최적화되어 있습니다.</p>
-            <p>모바일 환경에서 내용을 확인하시려면, 아래 노션을 이용해 주세요.</p>
-            <div class="link-container">
-                <a href="https://www.notion.so/d553e45114e04fd69fde4ed56d8afe6b?source=copy_link" target="_blank" class="notion-link">
-                    🔗 포트폴리오 노션 페이지
-                </a>
-            </div>
+        
+        message.style.cssText = `
+            background: rgba(20, 24, 33, 0.85);
+            border: 1px solid rgba(255, 235, 153, 0.3);
+            border-radius: 16px;
+            padding: 32px 24px;
+            width: 90%;
+            max-width: 450px;
+            margin: 40px auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 235, 153, 0.1);
+            backdrop-filter: blur(8px);
+            text-align: center;
+            color: #ffffff;
         `;
+
+        message.innerHTML = `
+            <div style="font-size: 2.8rem; margin-bottom: 14px; filter: drop-shadow(0 0 8px rgba(255, 235, 153, 0.6));">📱</div>
+            <h2 style="color: #FFEB99; font-size: 1.5rem; font-weight: 700; margin-bottom: 16px; letter-spacing: -0.5px;">
+                모바일 환경 안내
+            </h2>
+            <p style="color: #E2E8F0; font-size: 0.95rem; line-height: 1.6; margin-bottom: 12px;">
+            본 포트폴리오는 <strong style="color: #FFEB99;">PC 환경</strong>에 최적화되어 있습니다.<br>
+            (데스크톱 및 노트북 환경을 권장합니다)
+            </p>
+            <p style="color: #94A3B8; font-size: 0.85rem; line-height: 1.5; margin-bottom: 24px;">
+                모바일에서는 게임 플레이가 제한될 수 있으니<br>상단의 노션 페이지를 통해 확인해 보세요!
+            </p>
+        `;
+        
         placeholder.appendChild(message);
+        placeholder.style.height = 'auto';
+        placeholder.style.minHeight = 'initial';
     }
     
-    if (isMobileDevice()) {
+    if (true) { // -> 모바일 접근 허용
         //모바일일 경우: 메시지 표시 후 게임 로드 중단
         displayMobileMessage();
         return;
     }
+
     //#endregion
 
     //#region PC
@@ -39,6 +60,46 @@ document.addEventListener('DOMContentLoaded', function() {
     //유니티 원본 해상도 정의
     const ORIGINAL_WIDTH = 1920;
     const ORIGINAL_HEIGHT = 1080;
+
+    //2. 준비 중 or 파일 부재 메시지
+    function displayNotReadyMessage() {
+        const message = document.createElement('div');
+        message.className = 'not-ready-warning-message';
+
+        message.style.cssText = `
+            background: rgba(20, 24, 33, 0.85);
+            border: 1px solid rgba(255, 235, 153, 0.3);
+            border-radius: 16px;
+            padding: 32px 24px;
+            width: 90%;
+            max-width: 450px;
+            margin: 40px auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 235, 153, 0.1);
+            backdrop-filter: blur(8px);
+            text-align: center;
+            color: #ffffff;
+        `;
+
+        message.innerHTML = `
+            <div style="font-size: 2.8rem; margin-bottom: 14px; filter: drop-shadow(0 0 10px rgba(255, 235, 153, 0.6));">🚧</div>
+            <h2 style="color: #FFEB99; font-size: 1.5rem; font-weight: 700; margin-bottom: 16px; letter-spacing: -0.5px; line-height: 1.3;">
+                곧 찾아뵙겠습니다!
+            </h2>
+            <p style="color: #E2E8F0; font-size: 0.95rem; line-height: 1.6; margin-bottom: 12px;">
+                이 부분은 현재 <strong style="color: #FFEB99;">마무리 작업 중</strong>입니다.<br>
+                완성된 모습으로 빠르게 업데이트할게요!
+            </p>
+            <p style="color: #94A3B8; font-size: 0.85rem; line-height: 1.5; margin-bottom: 24px;">
+                조금만 기다려 주시거나,<br>다른 카테고리를 먼저 확인해 보세요. 😊
+            </p>
+        `;
+
+        placeholder.appendChild(message);
+        placeholder.style.height = 'auto';
+        placeholder.style.minHeight = 'initial';
+    }
+
+
 
     function adjustIframeScale(iframeElement) {
         if (!iframeElement) return;
@@ -119,11 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             window.addEventListener('resize', () => adjustIframeScale(iframe));
         } else {
-            //파일이 없으면 '준비 중' 메시지 표시
-            const message = document.createElement('h1');
-            message.style.color = '#FFEB99';
-            message.textContent = "아직 준비중입니다 ㅠㅠ";
-            placeholder.appendChild(message);
+            displayNotReadyMessage();
         }
     });
     //#endregion
