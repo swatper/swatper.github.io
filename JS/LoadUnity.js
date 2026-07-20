@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
         placeholder.style.minHeight = 'initial';
     }
     
-    if (true) { // -> 모바일 접근 허용
+    if (false) { // -> 모바일 접근 허용
         //모바일일 경우: 메시지 표시 후 게임 로드 중단
         displayMobileMessage();
         return;
