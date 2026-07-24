@@ -79,22 +79,14 @@ def extract_and_save_coupon():
                 coupon_code = "NOT_AVAILABLE"
                 asset_url = url
             else:
-                # 1. 퍼블리셔 이름 추출 (예: Gustav Olsson AB)
-                publisher_selector = "span.caption.mb-5"
-                if page.locator(publisher_selector).count() > 0:
-                    raw_publisher = page.locator(publisher_selector).inner_text()
-                    publisher_name = raw_publisher.replace("asset giveaway", "").strip()
-                else:
-                    print("⚠️ 퍼블리셔 셀렉터를 찾지 못했습니다.")
-
-                # 2. 에셋 이름 추출 (예: Ocean Toolkit)
+                # 1. 에셋 이름 추출 (예: Ocean Toolkit)
                 asset_name_selector = "h2.header-large"
                 if page.locator(asset_name_selector).count() > 0:
                     asset_name = page.locator(asset_name_selector).inner_text().strip()
                 else:
                     print("⚠️ 에셋 이름 셀렉터를 찾지 못했습니다.")
 
-                # 3. 쿠폰 코드 추출
+                # 2. 쿠폰 코드 추출
                 coupon_selector = "span.body.mt-5" 
                 page.wait_for_selector(coupon_selector, timeout=5000)
                 full_text = page.locator(coupon_selector).inner_text()
@@ -104,6 +96,22 @@ def extract_and_save_coupon():
                     coupon_code = match.group(1)
                 else:
                     print("⚠️ 쿠폰 패턴을 찾지 못했습니다.")
+
+                
+                # 3. 퍼블리셔 이름 추출 (예: Gustav Olsson AB)
+                publisher_selector = "span.caption.mb-5"
+                if page.locator(publisher_selector).count() > 0:
+                    raw_publisher = page.locator(publisher_selector).inner_text()
+                    cleaned_publisher = raw_publisher.replace("ASSET GIVEAWAY", "").replace("PUBLISHER", "").strip()
+
+                    if cleaned_publisher:
+                        publisher_name = cleaned_publisher
+                    else:
+                        # 쿠폰 코드로부터 퍼블리셔 추출
+                        publisher_name = re.sub(r"\d{4}$", "", coupon_code) if coupon_code != "UNKNOWN" else "UNKNOWN"
+                else:
+                    print("⚠️ 퍼블리셔 셀렉터를 찾지 못했습니다.")
+
 
                 # 4. 에셋 상세 주소(URL) 추출
                 link_selector = 'a[aria-label="Get your free gift"]'
