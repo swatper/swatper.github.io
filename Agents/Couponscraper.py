@@ -58,9 +58,14 @@ def extract_and_save_coupon():
     with sync_playwright() as p:
         print("🤖 가상 크롬 브라우저를 실행합니다...")
         browser = p.chromium.launch(headless=True)
-        page = browser.new_page()
+        # 영어 페이지 고정을 위해 브라우저 locale 및 Accept-Language 헤더 설정
+        context = browser.new_context(
+            locale="en-US",
+            extra_http_headers={"Accept-Language": "en-US,en;q=0.9"}
+        )
+        page = context.new_page()
         
-        url = f"{base_url}/ko-KR/publisher-sale"
+        url = f"{base_url}/publisher-sale"
         print(f"🌐 페이지 주소로 이동 중: {url}")
         page.goto(url)
         
